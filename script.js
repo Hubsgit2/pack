@@ -1,3 +1,9 @@
+// === PART 1: DATA + STORE + PACKS ===
+
+let coins = 500;
+let collection = [];
+
+const players = [
 { name: "Josh Allen", team: "Bills", rating: 99, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/josh-allen.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/BUF", price: 1200 },
 { name: "Josh Allen", team: "Bills", rating: 99, img: "https://www.statmuse.com/_image?href=https%3A%2F%2Fcdn.statmuse.com%2Fimg%2Fnfl%2Fplayers%2Fbuffalo-bills-josh-allen2025--qcoxd6nl.png&w=600&h=600&f=webp", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/BUF", price: 1200 },
 { name: "Matt Milano", team: "Bills", rating: 91, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/matt-milano.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/BUF", price: 850 },
@@ -255,6 +261,7 @@
 { name: "AJ Barner", team: "Seahawks", rating: 74, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/aj-barner.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 540 },
 { name: "Jake Bobo", team: "Seahawks", rating: 78, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/jake-bobo.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 680 },
 { name: "Anthony Bradford", team: "Seahawks", rating: 76, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/anthony-bradford.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 560 },
+{ name: "Coby Bryant", team: "Seahawks", rating: 78, img: "https://
 // CUT: Bobby Wagner (signed Rams), Jamal Adams (released)
 
 // FALCONS
@@ -343,3 +350,212 @@
 { name: "Brian Branch", team: "Lions", rating: 88, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/brian-branch.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/DET", price: 860 },
 { name: "Kerby Joseph", team: "Lions", rating: 86, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/kerby-joseph.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/DET", price: 820 },
 { name: "Alex Anzalone", team: "Lions", rating: 85, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/alex-anzalone.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/DET", price: 800 },
+
+
+];
+
+// Coins display
+function updateCoins(){ document.getElementById("coins").innerText = coins; }
+
+// Card rarity
+function cardRarity(player) {
+    if (player.rating === 99) return "Ultimate";
+    if (player.rating >= 97) return "Legendary";
+    if (player.rating >= 93) return "Elite";
+    if (player.rating >= 81) return "Rare";
+    return "Common";
+}
+
+// Display collection
+function displayCollection() {
+    const div = document.getElementById("collection");
+    div.innerHTML = "";
+    collection.forEach((p,index)=>{
+        const card = document.createElement("div");
+        card.className="card";
+        card.innerHTML = `
+            <div class="rarity-label">${cardRarity(p)}</div>
+            <img class="player-photo" src="${p.img}" />
+            <img class="team-logo" src="${p.logo}" />
+            <div class="card-content">
+                <h3>${p.name}</h3>
+                <p>${p.team}</p>
+                <p>⭐ ${p.rating}</p>
+                <button onclick="sellCard(${index})">Sell</button>
+            </div>
+        `;
+        div.appendChild(card);
+    });
+}
+
+function sellCard(index){
+    const card = collection.splice(index,1)[0];
+    const sellPrice = Math.floor(card.price/2);
+    coins += sellPrice;
+    alert(`Sold ${card.name} for ${sellPrice} coins!`);
+    updateCoins();
+    displayCollection();
+}
+
+// Store
+function toggleStore(){
+    const storeDiv = document.getElementById("store-container");
+    if(storeDiv.style.display==="none"){
+        storeDiv.style.display="block";
+        displayStore();
+    } else storeDiv.style.display="none";
+}
+
+function displayStore(){
+    const storeDiv = document.getElementById("store");
+    storeDiv.innerHTML="";
+    players.forEach((p,index)=>{
+        const card = document.createElement("div");
+        card.className="card";
+        card.innerHTML = `
+            <div class="rarity-label">${cardRarity(p)}</div>
+            <img class="player-photo" src="${p.img}" />
+            <img class="team-logo" src="${p.logo}" />
+            <div class="card-content">
+                <h3>${p.name}</h3>
+                <p>${p.team}</p>
+                <p>⭐ ${p.rating}</p>
+                <p>Price: ${p.price} coins</p>
+                <button onclick="buyCard(${index})">Buy</button>
+            </div>
+        `;
+        storeDiv.appendChild(card);
+    });
+}
+
+function buyCard(index){
+    const p = players[index];
+    if(coins >= p.price){
+        coins -= p.price;
+        collection.push(p);
+        alert(`Bought ${p.name}!`);
+        updateCoins();
+        displayCollection();
+    } else alert("Not enough coins!");
+}
+
+// Pack opening
+function openPack(){
+    if(coins < 200){ alert("Not enough coins!"); return; }
+    coins -= 200;
+    updateCoins();
+    const packContainer = document.getElementById("pack-container");
+    packContainer.innerHTML="";
+    const packCards = [];
+    for(let i=0;i<5;i++){
+        const card = players[Math.floor(Math.random()*players.length)];
+        packCards.push(card);
+        collection.push(card);
+    }
+    packCards.forEach((card,index)=>{
+        const cardEl = document.createElement("div");
+        cardEl.className="pack-card front";
+        cardEl.style.top="0px";
+        cardEl.style.left=`${225 + index*20}px`;
+        cardEl.innerHTML = `
+            <img class="player-photo" src="${card.img}" />
+            <img class="team-logo" src="${card.logo}" />
+            <div class="card-content">
+                <h4>${card.name}</h4>
+                <p>${card.team}</p>
+                <p>⭐ ${card.rating}</p>
+            </div>
+        `;
+        packContainer.appendChild(cardEl);
+        setTimeout(()=>{ cardEl.classList.add("revealed"); }, 500 + index*400);
+    });
+    setTimeout(displayCollection,3000);
+}
+// === PART 2: MINI-GAME ===
+
+const canvas = document.getElementById("mini-game");
+const ctx = canvas.getContext("2d");
+let gameRunning = false;
+
+// Player and defender
+let playerObj = {x: 280, y: 250, width: 40, height: 40, speed: 5};
+let defender = {x: Math.random()*500, y: 50, width: 40, height: 40, speed: 2};
+const endZoneY = 0;
+const keys = {};
+
+document.addEventListener('keydown', e => keys[e.key] = true);
+document.addEventListener('keyup', e => keys[e.key] = false);
+
+function startMiniGame() {
+    if(gameRunning) return;
+    gameRunning = true;
+    playerObj.x = 280; playerObj.y = 250;
+    defender.x = Math.random() * 500; defender.y = 50;
+    requestAnimationFrame(gameLoop);
+}
+
+function draw3DRect(obj, color) {
+    const scale = 1 + (canvas.height - obj.y) / 1000;
+    const w = obj.width * scale;
+    const h = obj.height * scale;
+    const x = obj.x - (w - obj.width)/2;
+    const y = obj.y - (h - obj.height)/2;
+
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 5;
+
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+
+    ctx.shadowBlur = 0;
+}
+
+function gameLoop() {
+    if(!gameRunning) return;
+
+    const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    grad.addColorStop(0, "#0b3d91");
+    grad.addColorStop(1, "#004d00");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#003366";
+    ctx.fillRect(0,0,canvas.width,40);
+
+    if(keys['ArrowLeft'] && playerObj.x>0) playerObj.x -= playerObj.speed;
+    if(keys['ArrowRight'] && playerObj.x+playerObj.width<canvas.width) playerObj.x += playerObj.speed;
+    if(keys['ArrowUp'] && playerObj.y>0) playerObj.y -= playerObj.speed;
+    if(keys['ArrowDown'] && playerObj.y+playerObj.height<canvas.height) playerObj.y += playerObj.speed;
+
+    draw3DRect(playerObj, "yellow");
+
+    defender.y += defender.speed;
+    if(defender.y > canvas.height) defender.y = -50;
+    defender.x += (defender.x + 20 < playerObj.x + playerObj.width/2 ? 1 : -1);
+
+    draw3DRect(defender, "red");
+
+    if(playerObj.x < defender.x + defender.width &&
+       playerObj.x + playerObj.width > defender.x &&
+       playerObj.y < defender.y + defender.height &&
+       playerObj.y + playerObj.height > defender.y){
+        endMiniGame(false); return;
+    }
+
+    if(playerObj.y <= endZoneY + 40){ endMiniGame(true); return; }
+
+    requestAnimationFrame(gameLoop);
+}
+
+function endMiniGame(won){
+    gameRunning=false;
+    if(won){ coins+=200; alert("Touchdown! +200 coins"); }
+    else alert("Tackle! Try again.");
+    updateCoins();
+}
+
+updateCoins();
+displayCollection();
+
