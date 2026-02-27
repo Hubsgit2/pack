@@ -261,7 +261,6 @@ const players = [
 { name: "AJ Barner", team: "Seahawks", rating: 74, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/aj-barner.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 540 },
 { name: "Jake Bobo", team: "Seahawks", rating: 78, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/jake-bobo.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 680 },
 { name: "Anthony Bradford", team: "Seahawks", rating: 76, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/anthony-bradford.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SEA", price: 560 },
-{ name: "Coby Bryant", team: "Seahawks", rating: 78, img: "https://
 // CUT: Bobby Wagner (signed Rams), Jamal Adams (released)
 
 // FALCONS
