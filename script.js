@@ -1,3 +1,4 @@
+
 // === PART 1: DATA + STORE + PACKS ===
 
 let coins = 500;
@@ -2684,7 +2685,7 @@ const players = [
   { name: "Luke Haggard", team: "Buccaneers", rating: 72, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/luke-haggard.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/TB", price: 100 },
   { name: "Ben Scott", team: "Buccaneers", rating: 72, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/ben-scott.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/TB", price: 100 },
   { name: "Evan Deckers", team: "Buccaneers", rating: 68, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/evan-deckers.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/TB", price: 100 },
-  ]
+]
  
 
 
