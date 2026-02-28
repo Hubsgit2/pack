@@ -2835,7 +2835,6 @@ function startMiniGame() {
     defender.x = Math.random() * 500; defender.y = 50;
     requestAnimationFrame(gameLoop);
 }
-
 function draw3DRect(obj, color) {
     const scale = 1 + (canvas.height - obj.y) / 1000;
     const w = obj.width * scale;
