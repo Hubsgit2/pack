@@ -2694,7 +2694,73 @@ const players = [
   { name: "Evan Deckers", team: "Buccaneers", rating: 68, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/evan-deckers.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/TB", price: 100 },
   ];
  
+// Email Username System for Game
+// This system handles email input and saves it to local storage
 
+class EmailUsernameSystem {
+    constructor() {
+        this.storageKey = 'gameUserEmail';
+        this.savedEmail = this.loadEmail();
+    }
+
+    // Save email to localStorage
+    saveEmail(email) {
+        if (this.validateEmail(email)) {
+            localStorage.setItem(this.storageKey, email);
+            this.savedEmail = email;
+            return { success: true, message: 'Email saved successfully!' };
+        } else {
+            return { success: false, message: 'Invalid email format' };
+        }
+    }
+
+    // Load email from localStorage
+    loadEmail() {
+        return localStorage.getItem(this.storageKey) || null;
+    }
+
+    // Basic email validation
+    validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Get saved email
+    getSavedEmail() {
+        return this.savedEmail;
+    }
+
+    // Check if user has saved email
+    hasEmail() {
+        return this.savedEmail !== null;
+    }
+
+    // Clear saved email (for logout/reset)
+    clearEmail() {
+        localStorage.removeItem(this.storageKey);
+        this.savedEmail = null;
+    }
+}
+
+// Example usage:
+// const emailSystem = new EmailUsernameSystem();
+// 
+// // Save email when user submits
+// const result = emailSystem.saveEmail('player@example.com');
+// if (result.success) {
+//     console.log('Email saved!');
+// }
+//
+// // Load email when game starts
+// const savedEmail = emailSystem.getSavedEmail();
+// if (savedEmail) {
+//     console.log('Welcome back, ' + savedEmail);
+// }
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = EmailUsernameSystem;
+}
 
 // Coins display
 function updateCoins(){ document.getElementById("coins").innerText = coins; }
