@@ -1,6 +1,7 @@
 
 
 
+
 // === PART 1: DATA + STORE + PACKS ===
 
 let coins = 500;
@@ -2698,69 +2699,8 @@ const players = [
  
 
 
-// Save game state to localStorage
-function saveGame() {
-    const gameState = {
-        coins: coins,
-        collection: collection
-    };
-    localStorage.setItem('footballCardGame', JSON.stringify(gameState));
-    console.log('Game saved!');
-}
-
-// Load game state from localStorage
-function loadGame() {
-    const saved = localStorage.getItem('footballCardGame');
-    if (saved) {
-        try {
-            const gameState = JSON.parse(saved);
-            coins = gameState.coins || 1000;
-            collection = gameState.collection || [];
-            console.log('Game loaded!');
-            return true;
-        } catch (e) {
-            console.error('Error loading save:', e);
-            return false;
-        }
-    }
-    return false;
-}
-
-// Reset game (clear save)
-function resetGame() {
-    if (confirm('Are you sure you want to reset your game? This will delete all your progress!')) {
-        localStorage.removeItem('footballCardGame');
-        coins = 1000;
-        collection = [];
-        updateCoins();
-        displayCollection();
-        alert('Game reset! Starting fresh with 1000 coins.');
-        saveGame();
-    }
-}
-
-// Game state
-let coins = 1000;
-let collection = [];
-
-// Load saved game on startup
-if (!loadGame()) {
-    // No save found, start with defaults
-    coins = 1000;
-    collection = [];
-}
-
-// Initialize display
-updateCoins();
-displayCollection();
-
-// === PART 1: CARD COLLECTION ===
-
 // Coins display
-function updateCoins() {
-    document.getElementById("coins").innerText = coins;
-    saveGame(); // Auto-save when coins change
-}
+function updateCoins(){ document.getElementById("coins").innerText = coins; }
 
 // Card rarity
 function cardRarity(player) {
@@ -2775,13 +2715,9 @@ function cardRarity(player) {
 function displayCollection() {
     const div = document.getElementById("collection");
     div.innerHTML = "";
-    if (collection.length === 0) {
-        div.innerHTML = "<p style='text-align:center;color:#999;'>No cards yet. Open a pack or visit the store!</p>";
-        return;
-    }
-    collection.forEach((p, index) => {
+    collection.forEach((p,index)=>{
         const card = document.createElement("div");
-        card.className = "card";
+        card.className="card";
         card.innerHTML = `
             <div class="rarity-label">${cardRarity(p)}</div>
             <img class="player-photo" src="${p.img}" />
@@ -2797,31 +2733,30 @@ function displayCollection() {
     });
 }
 
-function sellCard(index) {
-    const card = collection.splice(index, 1)[0];
-    const sellPrice = Math.floor(card.price / 2);
+function sellCard(index){
+    const card = collection.splice(index,1)[0];
+    const sellPrice = Math.floor(card.price/2);
     coins += sellPrice;
     alert(`Sold ${card.name} for ${sellPrice} coins!`);
     updateCoins();
     displayCollection();
-    saveGame(); // Auto-save when collection changes
 }
 
 // Store
-function toggleStore() {
+function toggleStore(){
     const storeDiv = document.getElementById("store-container");
-    if (storeDiv.style.display === "none") {
-        storeDiv.style.display = "block";
+    if(storeDiv.style.display==="none"){
+        storeDiv.style.display="block";
         displayStore();
-    } else storeDiv.style.display = "none";
+    } else storeDiv.style.display="none";
 }
 
-function displayStore() {
+function displayStore(){
     const storeDiv = document.getElementById("store");
-    storeDiv.innerHTML = "";
-    players.forEach((p, index) => {
+    storeDiv.innerHTML="";
+    players.forEach((p,index)=>{
         const card = document.createElement("div");
-        card.className = "card";
+        card.className="card";
         card.innerHTML = `
             <div class="rarity-label">${cardRarity(p)}</div>
             <img class="player-photo" src="${p.img}" />
@@ -2838,39 +2773,35 @@ function displayStore() {
     });
 }
 
-function buyCard(index) {
+function buyCard(index){
     const p = players[index];
-    if (coins >= p.price) {
+    if(coins >= p.price){
         coins -= p.price;
         collection.push(p);
         alert(`Bought ${p.name}!`);
         updateCoins();
         displayCollection();
-        saveGame(); // Auto-save when collection changes
     } else alert("Not enough coins!");
 }
 
 // Pack opening
-function openPack() {
-    if (coins < 200) {
-        alert("Not enough coins!");
-        return;
-    }
+function openPack(){
+    if(coins < 200){ alert("Not enough coins!"); return; }
     coins -= 200;
     updateCoins();
     const packContainer = document.getElementById("pack-container");
-    packContainer.innerHTML = "";
+    packContainer.innerHTML="";
     const packCards = [];
-    for (let i = 0; i < 5; i++) {
-        const card = players[Math.floor(Math.random() * players.length)];
+    for(let i=0;i<5;i++){
+        const card = players[Math.floor(Math.random()*players.length)];
         packCards.push(card);
         collection.push(card);
     }
-    packCards.forEach((card, index) => {
+    packCards.forEach((card,index)=>{
         const cardEl = document.createElement("div");
-        cardEl.className = "pack-card front";
-        cardEl.style.top = "0px";
-        cardEl.style.left = `${225 + index * 20}px`;
+        cardEl.className="pack-card front";
+        cardEl.style.top="0px";
+        cardEl.style.left=`${225 + index*20}px`;
         cardEl.innerHTML = `
             <img class="player-photo" src="${card.img}" />
             <img class="team-logo" src="${card.logo}" />
@@ -2881,16 +2812,10 @@ function openPack() {
             </div>
         `;
         packContainer.appendChild(cardEl);
-        setTimeout(() => {
-            cardEl.classList.add("revealed");
-        }, 500 + index * 400);
+        setTimeout(()=>{ cardEl.classList.add("revealed"); }, 500 + index*400);
     });
-    setTimeout(() => {
-        displayCollection();
-        saveGame(); // Auto-save after pack opening
-    }, 3000);
+    setTimeout(displayCollection,3000);
 }
-
 // === PART 2: MINI-GAME ===
 
 const canvas = document.getElementById("mini-game");
@@ -2898,8 +2823,8 @@ const ctx = canvas.getContext("2d");
 let gameRunning = false;
 
 // Player and defender
-let playerObj = { x: 280, y: 250, width: 40, height: 40, speed: 5 };
-let defender = { x: Math.random() * 500, y: 50, width: 40, height: 40, speed: 2 };
+let playerObj = {x: 280, y: 250, width: 40, height: 40, speed: 5};
+let defender = {x: Math.random()*500, y: 50, width: 40, height: 40, speed: 2};
 const endZoneY = 0;
 const keys = {};
 
@@ -2907,21 +2832,18 @@ document.addEventListener('keydown', e => keys[e.key] = true);
 document.addEventListener('keyup', e => keys[e.key] = false);
 
 function startMiniGame() {
-    if (gameRunning) return;
+    if(gameRunning) return;
     gameRunning = true;
-    playerObj.x = 280;
-    playerObj.y = 250;
-    defender.x = Math.random() * 500;
-    defender.y = 50;
+    playerObj.x = 280; playerObj.y = 250;
+    defender.x = Math.random() * 500; defender.y = 50;
     requestAnimationFrame(gameLoop);
 }
-
 function draw3DRect(obj, color) {
     const scale = 1 + (canvas.height - obj.y) / 1000;
     const w = obj.width * scale;
     const h = obj.height * scale;
-    const x = obj.x - (w - obj.width) / 2;
-    const y = obj.y - (h - obj.height) / 2;
+    const x = obj.x - (w - obj.width)/2;
+    const y = obj.y - (h - obj.height)/2;
 
     ctx.shadowColor = 'rgba(0,0,0,0.5)';
     ctx.shadowBlur = 10;
@@ -2935,55 +2857,48 @@ function draw3DRect(obj, color) {
 }
 
 function gameLoop() {
-    if (!gameRunning) return;
+    if(!gameRunning) return;
 
     const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
     grad.addColorStop(0, "#0b3d91");
     grad.addColorStop(1, "#004d00");
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
     ctx.fillStyle = "#003366";
-    ctx.fillRect(0, 0, canvas.width, 40);
+    ctx.fillRect(0,0,canvas.width,40);
 
-    if (keys['ArrowLeft'] && playerObj.x > 0) playerObj.x -= playerObj.speed;
-    if (keys['ArrowRight'] && playerObj.x + playerObj.width < canvas.width) playerObj.x += playerObj.speed;
-    if (keys['ArrowUp'] && playerObj.y > 0) playerObj.y -= playerObj.speed;
-    if (keys['ArrowDown'] && playerObj.y + playerObj.height < canvas.height) playerObj.y += playerObj.speed;
+    if(keys['ArrowLeft'] && playerObj.x>0) playerObj.x -= playerObj.speed;
+    if(keys['ArrowRight'] && playerObj.x+playerObj.width<canvas.width) playerObj.x += playerObj.speed;
+    if(keys['ArrowUp'] && playerObj.y>0) playerObj.y -= playerObj.speed;
+    if(keys['ArrowDown'] && playerObj.y+playerObj.height<canvas.height) playerObj.y += playerObj.speed;
 
     draw3DRect(playerObj, "yellow");
 
     defender.y += defender.speed;
-    if (defender.y > canvas.height) defender.y = -50;
-    defender.x += (defender.x + 20 < playerObj.x + playerObj.width / 2 ? 1 : -1);
+    if(defender.y > canvas.height) defender.y = -50;
+    defender.x += (defender.x + 20 < playerObj.x + playerObj.width/2 ? 1 : -1);
 
     draw3DRect(defender, "red");
 
-    if (playerObj.x < defender.x + defender.width &&
-        playerObj.x + playerObj.width > defender.x &&
-        playerObj.y < defender.y + defender.height &&
-        playerObj.y + playerObj.height > defender.y) {
-        endMiniGame(false);
-        return;
+    if(playerObj.x < defender.x + defender.width &&
+       playerObj.x + playerObj.width > defender.x &&
+       playerObj.y < defender.y + defender.height &&
+       playerObj.y + playerObj.height > defender.y){
+        endMiniGame(false); return;
     }
 
-    if (playerObj.y <= endZoneY + 40) {
-        endMiniGame(true);
-        return;
-    }
+    if(playerObj.y <= endZoneY + 40){ endMiniGame(true); return; }
 
     requestAnimationFrame(gameLoop);
 }
 
-function endMiniGame(won) {
-    gameRunning = false;
-    if (won) {
-        coins += 200;
-        alert("Touchdown! +200 coins");
-    } else alert("Tackle! Try again.");
+function endMiniGame(won){
+    gameRunning=false;
+    if(won){ coins+=200; alert("Touchdown! +200 coins"); }
+    else alert("Tackle! Try again.");
     updateCoins();
-    saveGame(); // Auto-save after mini-game
 }
 
-// Auto-save every 30 seconds as a backup
-setInterval(saveGame, 30000);
+updateCoins();
+displayCollection();
