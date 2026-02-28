@@ -11,7 +11,7 @@ const nflRoster = [
   { name: "Trey McBride", team: "Cardinals", rating: 97, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/trey-mcbride.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/ARI", price: 1000 },
   { name: "Budda Baker", team: "Cardinals", rating: 90, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/budda-baker.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/ARI", price: 650 },
   { name: "Paris Johnson Jr", team: "Cardinals", rating: 82, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/paris-johnson-jr.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/ARI", price: 250 },
-
+{ name: "Josh Allen", team: "Bills", rating: 99, img: "https://www.statmuse.com/_image?href=https%3A%2F%2Fcdn.statmuse.com%2Fimg%2Fnfl%2Fplayers%2Fbuffalo-bills-josh-allen2025--qcoxd6nl.png&w=600&h=600&f=webp", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/BUF", price: 1200 },
   // ==================== Atlanta Falcons ====================
   { name: "Michael Penix Jr", team: "Falcons", rating: 80, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/michael-penix-jr.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/ATL", price: 150 },
   { name: "Bijan Robinson", team: "Falcons", rating: 95, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/bijan-robinson.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/ATL", price: 900 },
