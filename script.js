@@ -2707,7 +2707,53 @@ function cardRarity(player) {
     if (player.rating >= 81) return "Rare";
     return "Common";
 }
+let currentUser = null;
+let coins = 0;
 
+function login() {
+  const email = document.getElementById("emailInput").value;
+
+  if (!email) {
+    alert("Please enter an email!");
+    return;
+  }
+
+  currentUser = email;
+
+  // Check if save exists
+  const savedData = localStorage.getItem("save_" + email);
+
+  if (savedData) {
+    const data = JSON.parse(savedData);
+    coins = data.coins;
+  } else {
+    coins = 500; // starter coins
+  }
+
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("game-screen").style.display = "block";
+
+  updateDisplay();
+}
+
+function updateDisplay() {
+  document.getElementById("coinsDisplay").innerText =
+    "Coins: " + coins;
+}
+
+function addCoins() {
+  coins += 100;
+  updateDisplay();
+}
+
+function saveGame() {
+  const data = {
+    coins: coins
+  };
+
+  localStorage.setItem("save_" + currentUser, JSON.stringify(data));
+  alert("Game Saved!");
+}
 // Display collection
 function displayCollection() {
     const div = document.getElementById("collection");
