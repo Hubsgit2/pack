@@ -24,6 +24,18 @@
         <h2>Marketplace</h2>
         <div id="store" class="store"></div>
     </div>
+    <div id="login-screen">
+  <h2>Enter Email to Load Save</h2>
+  <input type="email" id="emailInput" placeholder="Enter your email" />
+  <button onclick="login()">Enter Game</button>
+</div>
+
+<div id="game-screen" style="display:none;">
+  <h2>Welcome!</h2>
+  <p id="coinsDisplay"></p>
+  <button onclick="addCoins()">Add 100 Coins</button>
+  <button onclick="saveGame()">Save Game</button>
+</div>
 
     <h2>Your Collection</h2>
     <div id="collection" class="collection"></div>
