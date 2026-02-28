@@ -28,18 +28,24 @@
     </div>
 
     <h2>Your Collection</h2>
-    <div id="collection" class="collection"></div>
-    <div id="mobile-controls">
-  <div class="row">
-    <button class="ctrl-btn" data-key="ArrowUp">▲</button>
-  </div>
-  <div class="row">
-    <button class="ctrl-btn" data-key="ArrowLeft">◀</button>
-    <button class="ctrl-btn" data-key="ArrowDown">▼</button>
-    <button class="ctrl-btn" data-key="ArrowRight">▶</button>
-  </div>
-</div>
+   <script>
+canvas.addEventListener("touchstart", e => e.preventDefault());
+canvas.addEventListener("touchmove", e => e.preventDefault());
 
+document.querySelectorAll(".ctrl-btn").forEach(btn => {
+    const key = btn.getAttribute("data-key");
+
+    btn.addEventListener("touchstart", e => {
+        e.preventDefault();
+        keys[key] = true;
+    });
+
+    btn.addEventListener("touchend", e => {
+        e.preventDefault();
+        keys[key] = false;
+    });
+});
+</script>
     <script src="script.js"></script>
 </body>
 </html>
