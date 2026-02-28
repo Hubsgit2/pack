@@ -2834,6 +2834,24 @@ function startMiniGame() {
     defender.x = Math.random() * 500; defender.y = 50;
     requestAnimationFrame(gameLoop);
 }
+// Prevent scrolling while playing
+canvas.addEventListener("touchstart", e => e.preventDefault());
+canvas.addEventListener("touchmove", e => e.preventDefault());
+
+// Mobile button controls
+document.querySelectorAll(".ctrl-btn").forEach(btn => {
+    const key = btn.getAttribute("data-key");
+
+    btn.addEventListener("touchstart", e => {
+        e.preventDefault();
+        keys[key] = true;
+    });
+
+    btn.addEventListener("touchend", e => {
+        e.preventDefault();
+        keys[key] = false;
+    });
+});
 
 function draw3DRect(obj, color) {
     const scale = 1 + (canvas.height - obj.y) / 1000;
