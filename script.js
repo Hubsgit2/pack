@@ -4,8 +4,6 @@ let coins = 500;
 let collection = [];
 
 const nflRoster = [
-  // ==================== Arizona Cardinals ====================
-
   // ==================== 49ers ====================
   { name: "George Kittle", team: "49ers", rating: 98, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/george-kittle.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SF", price: 1000 },
   { name: "Trent Williams", team: "49ers", rating: 97, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/trent-williams.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/SF", price: 1000 },
@@ -2600,6 +2598,7 @@ const nflRoster = [
   { name: "Zeke Correll", team: "Vikings", rating: 72, img: "https://staticd.profootballnetwork.com/skm/assets/player-images/nfl/zeke-correll.png", logo: "https://static.www.nfl.com/h_40,w_40,q_auto,f_auto,dpr_2.0/league/api/clubs/logos/MIN", price: 100 },
 ];
 
+
 // Coins display
 function updateCoins(){ document.getElementById("coins").innerText = coins; }
 
@@ -2804,4 +2803,6 @@ function endMiniGame(won){
 
 updateCoins();
 displayCollection();
+
+
 
