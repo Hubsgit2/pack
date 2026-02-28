@@ -2814,6 +2814,28 @@ function openPack(){
     });
     setTimeout(displayCollection,3000);
 }
+function saveGame() {
+    const gameData = {
+        coins: coins,
+        collection: collection
+    };
+
+    localStorage.setItem("nflCardGameSave", JSON.stringify(gameData));
+}
+function loadGame() {
+    const savedData = localStorage.getItem("nflCardGameSave");
+
+    if (savedData) {
+        const gameData = JSON.parse(savedData);
+        coins = gameData.coins;
+        collection = gameData.collection;
+    }
+}
+loadGame();
+updateCoins();
+displayCollection();
+saveGame();
+setInterval(saveGame, 10000);
 // === PART 2: MINI-GAME ===
 
 const canvas = document.getElementById("mini-game");
